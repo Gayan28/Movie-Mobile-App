@@ -80,6 +80,7 @@ class _MainPageState extends State<MainPage> {
           }
           return true;
         },
+        
         child: ListView.builder(
             itemCount: _movies.length + (_isLoading ? 1 : 0),
             itemBuilder: (context, index) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tmdb_movie_app/models/movie_model.dart';
+import 'package:tmdb_movie_app/pages/single_movie_details_page.dart';
 import 'package:tmdb_movie_app/service/movie_service.dart';
 import 'package:tmdb_movie_app/widgets/search_detail.dart';
 
@@ -39,6 +40,7 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
       });
     }
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -57,39 +59,81 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                        hintText: 'Search for a movie',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search for a movie',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                            ),
                           ),
+                          onSubmitted: (_) => _searchMovies(),
                         ),
                       ),
-                      onSubmitted: (_) => _searchMovies(),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red[600],
-                    ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.search,
-                        size: 30,
-                        weight: 10,
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red[600],
+                        ),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.search,
+                            size: 30,
+                            weight: 10,
+                          ),
+                          onPressed: _searchMovies,
+                        ),
                       ),
-                      onPressed: _searchMovies,
-                    ),
+                    ],
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _searchResults.isNotEmpty
+                      ? GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _searchResults = _searchResults.where((results) {
+                                return (results.voteAverage / 2) > 4;
+                              }).toList();
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.amber[600],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star),
+                                Text(
+                                  '4.0',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Icon(Icons.arrow_upward_rounded)
+                              ],
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(" Results found: ${_searchResults.length}")
                 ],
               ),
             ),
@@ -109,17 +153,29 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
                 child: ListView.builder(
                   itemCount: _searchResults.length,
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        SearchWidget(movie: _searchResults[index]),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Divider(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SingleMoviePage(
+                              movie: _searchResults[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          SearchWidget(movie: _searchResults[index]),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Divider(),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

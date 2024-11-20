@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  String A = '';
 
   final _page = [
     const MainPage(),
@@ -20,6 +21,8 @@ class _HomePageState extends State<HomePage> {
     const TvShowsPage(),
     const SearchMoviePage(),
   ];
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +35,17 @@ class _HomePageState extends State<HomePage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.play_circle_fill), label: "Now playing"),
           BottomNavigationBarItem(
               icon: Icon(Icons.movie_creation_outlined), label: "Tv Series"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: "Search"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
         ],
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.red,
         selectedLabelStyle: const TextStyle(fontSize: 12),
       ),
-
       body: _page[_selectedIndex],
     );
   }

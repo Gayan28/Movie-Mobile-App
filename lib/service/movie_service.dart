@@ -53,7 +53,6 @@ class MovieService {
   }
 
   // Search movies by query
-  //https://api.themoviedb.org/3/search/movie?query=batman&api_key=c85b6e85f967a23b1be08a8e0ed51b6e
 
   Future<List<Movie>> searchMovies(String query) async {
     //String query = movie name we are searching
@@ -75,7 +74,6 @@ class MovieService {
   }
 
   // Fetch Similar Movies
-  //https://api.themoviedb.org/3/movie/299536/similar?api_key=c85b6e85f967a23b1be08a8e0ed51b6e
 
   Future<List<Movie>> fetchSimilarMovies(int movieId) async {
     try {
@@ -97,7 +95,6 @@ class MovieService {
   }
 
   // Fetch Recommended movies
-  //https://api.themoviedb.org/3/movie/299536/recommendations?api_key=c85b6e85f967a23b1be08a8e0ed51b6e
 
   Future<List<Movie>> fetchRecommendedMovies(int movieId) async {
     try {
@@ -119,7 +116,6 @@ class MovieService {
   }
 
   // Fetch imaages by movie Id
-  //https://api.themoviedb.org/3/movie/299536/images?api_key=c85b6e85f967a23b1be08a8e0ed51b6e
 
   Future<List<String>> fetchImaagesFromMovieId(int movieId) async {
     try {
