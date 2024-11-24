@@ -105,7 +105,7 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
                           onTap: () {
                             setState(() {
                               _searchResults = _searchResults.where((results) {
-                                return (results.voteAverage / 2) > 4;
+                                return (results.voteAverage) >= 7.8;
                               }).toList();
                             });
                           },
