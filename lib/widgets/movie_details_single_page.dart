@@ -114,7 +114,7 @@ class _MovieDetailsSinglepageState extends State<MovieDetailsSinglepage> {
                 valueLabelColor: const Color(0xff9b9b9b),
                 valueLabelTextStyle: const TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                     fontStyle: FontStyle.normal,
                     fontSize: 12.0),
                 valueLabelRadius: 10,
